@@ -12,6 +12,7 @@ def new_token():
 def write_cell(worksheetKey, row, col, value):
     gc = new_token()
     worksheet = gc.open_by_key(worksheetKey).get_worksheet(0)
+    row = str(row)
     if(worksheet.acell(col + row).value is None):
         worksheet.update_acell(col + row, value)
 
