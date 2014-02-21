@@ -4,22 +4,24 @@ from controller import spreadsheet as ss
 app = Bottle()
 
 
-@app.post('/api/v1/cell')
-def post_cell():
+@app.post('/api/v1/cell/append')
+def post_cell_append():
     """
-    Writes to a spreadsheet cell.
+    Append a cell with 'value' to the next available row in 'col' of
+    'worksheetKey'.
 
-    POST a JSON with 'worksheet', 'row', 'col', and 'value' keys.
+    POST a JSON with 'worksheetKey', 'col', and 'value' keys.
     HTTP request header must set Content-Type to application/json.
     """
     data = request.json
-    attr = ('worksheetKey', 'row', 'col', 'value')
+    attr = ('worksheetKey', 'col', 'value')
 
     if data is not None and all(key in data for key in attr):
-        ss.write_cell(data[attr[0]],    # worksheet key
-                      data[attr[1]],    # row
-                      data[attr[2]],    # col
-                      data[attr[3]])    # value
+        worksheet = data[attr[0]]
+        col = data[attr[1]]
+        row = ss.next_append_row(worksheet, col)
+        value = data[attr[2]]
+        ss.write_cell(worksheet, row, col, value)
         response.status = '201 Created'
     else:
         response.status = '400 Bad Request'
