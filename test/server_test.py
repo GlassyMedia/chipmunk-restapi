@@ -8,7 +8,7 @@ app = TestApp(server.app)
 class TestWriteCell(unittest.TestCase):
     def test_post_cell(self):
         response = app.post_json('/api/v1/cell',
-                                 {'worksheet': 'chipmunk testing',
+                                 {'worksheetKey': '0AlVXob3noRJTdFV5b3piVU03LU1zaEVObU4wMXViSmc',
                                   'row': '2',
                                   'col': 'A',
                                   'value': 'unit test pass'})
@@ -16,7 +16,7 @@ class TestWriteCell(unittest.TestCase):
 
     def test_post_cell_missing_keys(self):
         response = app.post_json('/api/v1/cell',
-                                 {'worksheet': 'chipmunk testing',
+                                 {'worksheetKey': '0AlVXob3noRJTdFV5b3piVU03LU1zaEVObU4wMXViSmc',
                                   'col': 'A'},
                                  status=400)
         self.assertEqual(response.status, "400 Bad Request")

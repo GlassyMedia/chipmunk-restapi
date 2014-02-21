@@ -13,12 +13,13 @@ def post_cell():
     HTTP request header must set Content-Type to application/json.
     """
     data = request.json
-    attr = ('worksheet', 'row', 'col', 'value')
+    attr = ('worksheetKey', 'row', 'col', 'value')
+
     if data is not None and all(key in data for key in attr):
-        ss.write_cell(data["worksheet"],
-                      data["row"],
-                      data["col"],
-                      data["value"])
+        ss.write_cell(data[attr[0]],    # worksheet key
+                      data[attr[1]],    # row
+                      data[attr[2]],    # col
+                      data[attr[3]])    # value
         response.status = '201 Created'
     else:
         response.status = '400 Bad Request'
