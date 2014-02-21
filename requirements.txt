@@ -1,0 +1,5 @@
+bottle==0.12.4
+gspread==0.1.0
+WebTest==2.0.14
+
+gunicorn==18.0
