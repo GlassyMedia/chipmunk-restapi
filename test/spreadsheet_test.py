@@ -14,12 +14,13 @@ class SpreadsheetTest(unittest.TestCase):
         cell_list = worksheet.range('A1:A100')
         for cell in cell_list:
             cell.value = ''
+        worksheet.update_cells(cell_list)
 
     def test_write_cell(self):
         self.assertIsNone(ss.write_cell(WORKSHEET,
                                         "1",
                                         "A",
-                                        "this is test"))
+                                        "write cell"))
 
     def test_write_worksheet_not_found(self):
         self.assertRaises(gspread.SpreadsheetNotFound,
@@ -27,7 +28,7 @@ class SpreadsheetTest(unittest.TestCase):
                           "xxx1234",
                           "1",
                           "A",
-                          "this is test")
+                          "write not found")
 
     def test_col2num(self):
         self.assertEqual(ss.col2num("A"), 1)
@@ -35,5 +36,9 @@ class SpreadsheetTest(unittest.TestCase):
         self.assertEqual(ss.col2num("AA"), 27)
 
     def test_next_append_row(self):
+        ss.write_cell(WORKSHEET,
+                      "1",
+                      "A",
+                      "occupied cell")
         self.assertEqual(ss.next_append_row(WORKSHEET, "A"),
-                         3)
+                         2)
