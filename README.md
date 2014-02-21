@@ -44,7 +44,11 @@ Install nose.
 pip install nose
 ```
 
-Then if you've exported the environment variables manually.
+In addition to the Google login environment variables, you'll also need to set
+`TEST_WORKSHEET_KEY` to specify your test worksheet in your account. You can
+get your worksheet key in the URL parameter of your worksheet on Google Drive.
+
+Then if you've exported all the environment variables manually.
 
 ```
 nosetests
