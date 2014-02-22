@@ -63,3 +63,10 @@ foreman run nosetests
 ## Improvements
 
 - not hard code the Google login
+
+## License
+
+The MIT License (MIT)
+
+Copyright (c) 2014 Glassy Media Inc.
+
