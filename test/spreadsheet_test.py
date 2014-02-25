@@ -47,3 +47,15 @@ class SpreadsheetTest(unittest.TestCase):
                       "occupied cell")
         self.assertEqual(ss.next_append_row(WORKSHEET, "A"),
                          2)
+
+    def test_read_column(self):
+        message = ["write test cell message",
+                   "test 2",
+                   "test 3",
+                   None,
+                   "test 5"]
+        ss.write_cell(WORKSHEET, "1", "A", message[0])
+        ss.write_cell(WORKSHEET, "2", "A", message[1])
+        ss.write_cell(WORKSHEET, "3", "A", message[2])
+        ss.write_cell(WORKSHEET, "5", "A", message[4])
+        self.assertEqual(ss.read_column(WORKSHEET, "A"), message)

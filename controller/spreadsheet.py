@@ -38,7 +38,11 @@ def col2num(col):
     return num
 
 
-def next_append_row(worksheetKey, col):
+def read_column(worksheetKey, col):
     gc = new_token()
     worksheet = gc.open_by_key(worksheetKey).get_worksheet(0)
-    return len(worksheet.col_values(col2num(col))) + 1
+    return worksheet.col_values(col2num(col))
+
+
+def next_append_row(worksheetKey, col):
+    return len(read_column(worksheetKey, col)) + 1
