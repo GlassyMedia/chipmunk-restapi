@@ -73,3 +73,23 @@ class TestWriteReadCell(unittest.TestCase):
         self.assertEqual(response.status, "400 Bad Request")
 
 
+class TestReadColumn(unittest.TestCase):
+    def setUp(self):
+        """Wipe first column in the test worksheet."""
+        wipe_col_A()
+
+    def test_get_column(self):
+        app.post_json('/api/v1/cell', {'worksheetKey': WORKSHEET,
+                                       'row': '1',
+                                       'col': 'A',
+                                       'value': 'test 1'})
+        app.post_json('/api/v1/cell', {'worksheetKey': WORKSHEET,
+                                       'row': '3',
+                                       'col': 'A',
+                                       'value': 'test 3'})
+        response = app.get('/api/v1/column',
+                           {'worksheetKey': WORKSHEET,
+                            'col': 'A'})
+        self.assertEqual(response.status, "200 OK")
+        self.assertEqual(response.body,
+                         '{"worksheetKey": "0AlVXob3noRJTdFV5b3piVU03LU1zaEVObU4wMXViSmc", "values": ["test 1", null, "test 3"], "col": "A"}')

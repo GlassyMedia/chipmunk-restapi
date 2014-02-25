@@ -72,5 +72,25 @@ def get_cell():
         return response
 
 
+@app.get('/api/v1/column')
+def get_column():
+    """
+    GET a specific cell
+    """
+    q = request.query.decode()
+    worksheet = q['worksheetKey']
+    col = q['col']
+    values = ss.read_column(worksheet, col)
+    if values is not None:
+        response.status = '200 OK'
+        response.content_type = 'application/json'
+        return {'values': values,
+                'col': col,
+                'worksheetKey': worksheet}
+    else:
+        response.status = '400 Bad Request'
+        return response
+
+
 if __name__ == "__main__":
     run(app, host='localhost', port=8080, reloader=True, debug=True)
