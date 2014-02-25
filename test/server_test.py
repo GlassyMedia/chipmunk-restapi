@@ -9,6 +9,15 @@ app = TestApp(server.app)
 WORKSHEET = os.environ.get('TEST_WORKSHEET_KEY')
 
 
+def wipe_col_A():
+    gc = ss.new_token()
+    worksheet = gc.open_by_key(WORKSHEET).get_worksheet(0)
+    cell_list = worksheet.range('A1:A100')
+    for cell in cell_list:
+        cell.value = ''
+    worksheet.update_cells(cell_list)
+
+
 class TestAppendCell(unittest.TestCase):
     def test_post_cell_append(self):
         response = app.post_json('/api/v1/cell/append',
@@ -37,12 +46,7 @@ class TestWriteReadCell(unittest.TestCase):
 
     def setUp(self):
         """Wipe first column in the test worksheet."""
-        gc = ss.new_token()
-        worksheet = gc.open_by_key(WORKSHEET).get_worksheet(0)
-        cell_list = worksheet.range('A1:A100')
-        for cell in cell_list:
-            cell.value = ''
-        worksheet.update_cells(cell_list)
+        wipe_col_A()
 
     def test_post_cell(self):
         response = app.post_json('/api/v1/cell', self.message)
@@ -67,3 +71,5 @@ class TestWriteReadCell(unittest.TestCase):
     def test_post_cell_nojson(self):
         response = app.post('/api/v1/cell', status=400)
         self.assertEqual(response.status, "400 Bad Request")
+
+
