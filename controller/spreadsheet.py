@@ -17,6 +17,13 @@ def write_cell(worksheetKey, row, col, value):
         worksheet.update_acell(col + row, value)
 
 
+def read_cell(worksheetKey, row, col):
+    gc = new_token()
+    worksheet = gc.open_by_key(worksheetKey).get_worksheet(0)
+    row = str(row)
+    return worksheet.acell(col + row).value
+
+
 def col2num(col):
     """
     Converts a spreadsheet column letter name to a column number

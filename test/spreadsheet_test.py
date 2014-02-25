@@ -22,6 +22,11 @@ class SpreadsheetTest(unittest.TestCase):
                                         "A",
                                         "write cell"))
 
+    def test_writeread_cell(self):
+        message = "write test cell message"
+        ss.write_cell(WORKSHEET, "2", "A", message)
+        self.assertEqual(ss.read_cell(WORKSHEET, "2", "A"), message)
+
     def test_write_worksheet_not_found(self):
         self.assertRaises(gspread.SpreadsheetNotFound,
                           ss.write_cell,
