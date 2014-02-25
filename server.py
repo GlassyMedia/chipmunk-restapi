@@ -50,5 +50,27 @@ def post_cell():
     return response
 
 
+@app.get('/api/v1/cell')
+def get_cell():
+    """
+    GET a specific cell
+    """
+    q = request.query.decode()
+    worksheet = q['worksheetKey']
+    row = q['row']
+    col = q['col']
+    value = ss.read_cell(worksheet, row, col)
+    if value is not None:
+        response.status = '200 OK'
+        response.content_type = 'application/json'
+        return {'value': value,
+                'row': row,
+                'col': col,
+                'worksheetKey': worksheet}
+    else:
+        response.status = '400 Bad Request'
+        return response
+
+
 if __name__ == "__main__":
     run(app, host='localhost', port=8080, reloader=True, debug=True)
