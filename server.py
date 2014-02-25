@@ -28,5 +28,27 @@ def post_cell_append():
 
     return response
 
+
+@app.post('/api/v1/cell')
+def post_cell():
+    """
+    POST to a specific cell to write value into location specified
+    """
+    data = request.json
+    attr = ('worksheetKey', 'row', 'col', 'value')
+
+    if data is not None and all(key in data for key in attr):
+        worksheet = data[attr[0]]
+        row = data[attr[1]]
+        col = data[attr[2]]
+        value = data[attr[3]]
+        ss.write_cell(worksheet, row, col, value)
+        response.status = '201 Created'
+    else:
+        response.status = '400 Bad Request'
+
+    return response
+
+
 if __name__ == "__main__":
     run(app, host='localhost', port=8080, reloader=True, debug=True)
