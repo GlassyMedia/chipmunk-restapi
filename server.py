@@ -60,16 +60,12 @@ def get_cell():
     row = q['row']
     col = q['col']
     value = ss.read_cell(worksheet, row, col)
-    if value is not None:
-        response.status = '200 OK'
-        response.content_type = 'application/json'
-        return {'value': value,
-                'row': row,
-                'col': col,
-                'worksheetKey': worksheet}
-    else:
-        response.status = '400 Bad Request'
-        return response
+    response.status = '200 OK'
+    response.content_type = 'application/json'
+    return {'value': value,
+            'row': row,
+            'col': col,
+            'worksheetKey': worksheet}
 
 
 @app.get('/api/v1/column')
