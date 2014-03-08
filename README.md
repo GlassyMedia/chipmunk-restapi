@@ -1,5 +1,7 @@
 # chipmunk-restapi
 
+![chipmunk logo](logo/chipmunk.png)
+
 A REST API backend server for the [Chipmunk Chrome extension](https://github.com/GlassyMedia/chipmunk-chrome-extension)
 
 ## Usage
