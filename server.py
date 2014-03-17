@@ -71,7 +71,7 @@ def get_cell():
 @app.get('/api/v1/column')
 def get_column():
     """
-    GET a specific cell
+    GET a specific column
     """
     q = request.query.decode()
     worksheet = q['worksheetKey']
